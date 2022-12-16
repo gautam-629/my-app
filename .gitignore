@@ -1,0 +1,8 @@
+node_modules
+
+git init
+git add .
+git commit -m "first commit"
+git remote add origin https://github.com/gautam-629/my-app.git
+git push origin master
+
