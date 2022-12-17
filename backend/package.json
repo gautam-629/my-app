@@ -4,14 +4,18 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon -r esm server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cloudinary": "^1.33.0",
+    "dotenv": "^16.0.3",
+    "env": "^0.0.2",
+    "esm": "^3.2.25",
     "express": "^4.18.2",
+    "joi": "^17.7.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.8.0",
     "nodemon": "^2.0.20"

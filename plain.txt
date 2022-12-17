@@ -1,0 +1,2 @@
+1. making navbar, register,login in frontend
+register-> name,email,password,repeat_password,avatar

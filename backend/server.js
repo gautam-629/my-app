@@ -1,10 +1,13 @@
-const express=require('express')
+import express from 'express'
 let app=express();
-
-app.get('/',(req,res)=>{
-    res.send("Hello World")
-});
-
-app.listen(5000,()=>{
-    console.log('ServerRunning at port 5000');
+import {APP_PORT} from './config';
+import {auth} from './routes';
+import errorHandler from './middlewares/errorHandler';
+app.use(express.urlencoded({extended:false}));
+app.use(express.json())
+//config routers
+app.use('/api',auth);
+app.use(errorHandler);
+app.listen(APP_PORT,()=>{
+    console.log(`ServerRunning at port https://localhost:${APP_PORT}`);
 })
