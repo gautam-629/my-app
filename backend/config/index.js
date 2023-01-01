@@ -3,5 +3,8 @@ dotenv.config();
 
 export const{
     APP_PORT,
-    DEBUG_MODE
+    DB_URL,
+    DEBUG_MODE,
+    REFRESH_JWT_SECRET,
+    ACCESS_JWT_TOKEN
 }=process.env;

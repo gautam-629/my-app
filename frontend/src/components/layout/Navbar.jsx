@@ -3,7 +3,7 @@ import React from 'react'
 const Navbar = () => {
     return (
         <>
-            <nav className='bg-primary flex justify-between px-7 '>
+            <nav className='bg-primary flex justify-between  pl-4 pr-20'>
                 <div className="image">
                     <img src="/images/shopit_logo.png" alt="" />
                 </div>
@@ -19,12 +19,12 @@ const Navbar = () => {
                         </div>
                     </form>
                 </div>
-                <div className="cart-wrapper flex justify-center items-center ">
-                    <div className='pl-6'>
+                <div className="cart-wrapper flex justify-center items-center gap-7">
+                    <div className='flex gap-1'>
                         <span className='text-white text-lg'>Cart</span>
                         <span className='bg-secondary px-2 py-1 rounded-sm'>9</span>
                     </div>
-                    <div className='login pl-6'>
+                    <div className='login'>
                         <button className='font-bold text-lg rounded-sm px-5 bg-secondary'>login</button>
                     </div>
                 </div>
