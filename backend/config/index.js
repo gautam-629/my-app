@@ -6,5 +6,6 @@ export const{
     DB_URL,
     DEBUG_MODE,
     REFRESH_JWT_SECRET,
-    ACCESS_JWT_TOKEN
+    ACCESS_JWT_TOKEN,
+    BASE_URL
 }=process.env;

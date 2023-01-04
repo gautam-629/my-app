@@ -12,6 +12,8 @@ import { registerSchema } from '../../validators/validators';
 import { REFRESH_JWT_SECRET, ACCESS_JWT_TOKEN } from '../../config';
 import JwtServices from '../../services/jwtServices';
 import UserDto from '../../Dtos/userDtos';
+import Jimp from 'jimp';
+import path from 'path';
 // api/register
 const registerController = {
   async register(req, res, next) {
@@ -31,6 +33,23 @@ const registerController = {
 
     const { name, email, password, avatar } = req.body;
 
+    // Image Base64
+    const buffer = Buffer.from(
+      avatar.replace(/^data:image\/(png|jpg|jpeg);base64,/, ''),
+      'base64'
+  );
+    const imagePath = `${Date.now()}-${Math.round(Math.random() * 1e9)}.png`;
+    // 32478362874-3242342342343432.png
+
+    try {
+      const jimResp = await Jimp.read(buffer);
+      jimResp
+        .resize(150, Jimp.AUTO)
+        .write(path.resolve(__dirname, `../../storage/${imagePath}`));
+    } catch (err) {
+      return next(err)
+    }
+
     //hash password
     const hashPassword = await bcrypt.hash(password, 10);
 
@@ -41,7 +60,7 @@ const registerController = {
         name,
         email,
         password: hashPassword,
-        avatar,
+        avatar:`/storage/${imagePath}`
       })
       const result = await user.save();
 
