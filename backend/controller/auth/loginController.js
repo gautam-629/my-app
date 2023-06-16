@@ -33,24 +33,30 @@ const loginController={
           //generate jwt and set into cookie
            //generate token
         const accessToken=JwtServices.sign({_id:user._id,role:user.role},'1m',ACCESS_JWT_TOKEN);
-        const refreshToken=JwtServices.sign({_id:user._id,role:user.role},'1y',REFRESH_JWT_SECRET);
+        // const refreshToken=JwtServices.sign({_id:user._id,role:user.role},'1y',REFRESH_JWT_SECRET);
 
 
         res.cookie('accessToken', accessToken, {
           maxAge: 1000*60*60,// 1h minutes in milliseconds
           httpOnly: true,
         });
-        res.cookie('refreshToken', refreshToken, {
-          maxAge: 1000*60*60,// 1h minutes in milliseconds
-          httpOnly: true,
-        });
+        // res.cookie('refreshToken', refreshToken, {
+        //   maxAge: 1000*60*60,// 1h minutes in milliseconds
+        //   httpOnly: true,
+        // });
         const userDto = new UserDto(user)
-        return res.status(201).json(userDto);
+        return res.status(201).json({user:userDto});
         
        } catch (error) {
            return next(error)
        }
-    }
+    },
+
+   async logout(req,res,next){
+        res.clearCookie('accessToken');
+        res.json({user:null});
+   }
+    
 }
 
 export default loginController;

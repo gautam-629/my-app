@@ -2,7 +2,7 @@ import express from 'express'
 let app=express();
 import cors from 'cors';
 import {APP_PORT,DB_URL} from './config';
-import {auth} from './routes';
+import {auth,product} from './routes';
 import errorHandler from './middlewares/errorHandler';
 app.use(express.urlencoded({extended:false}));
 import connectDb from './config/database';
@@ -14,6 +14,7 @@ app.use(cookieParser())
 app.use(express.json({limit:'8mb'}))
 //config routers
 app.use('/api',auth);
+app.use('/api',product);
 app.use(errorHandler);
 app.listen(APP_PORT,()=>{
     console.log(`ServerRunning at port http://localhost:${APP_PORT}`);

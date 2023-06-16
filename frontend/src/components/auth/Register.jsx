@@ -6,19 +6,19 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { STATUSES } from '../../config';
 const Register = () => {
-   const errorNotify = (message) => toast.error(`${message}!`);
+   const errorNotify = (errMessage) => toast.error(`${errMessage}!`);
    const sucessNotify = () => toast.success("Register Unsucessfull !");
    const {status} =useSelector((state)=>state.auth);
-   const {Message} =useSelector((state)=>state.auth.statusMessage);
+   const {errMessage} =useSelector((state)=>state.auth.statusMessage);
    useEffect(()=>{
       if (status === STATUSES.ERROR) {
-         errorNotify(Message)
+         errorNotify(errMessage)
      }
      
      if (status === STATUSES.SUCESS) {
          sucessNotify()
    }
-   },[status,Message])
+   },[status,errMessage])
  
    const dispatch = useDispatch()
    const initial = {
@@ -123,7 +123,7 @@ const Register = () => {
                      </div>
                   </div>
                   <div className='text-center mt-1'>
-                     <button type='submit' className='rounded-md text-black font-bold py-2 px-32 bg-secondary hover:bg-yellow-500'>Register</button>
+                     <button disabled={status === STATUSES.LOADING? true: false} type='submit' className='rounded-md text-black font-bold py-2 px-32 bg-secondary hover:bg-yellow-500'>Register</button>
                   </div>
                </form>
             </div>

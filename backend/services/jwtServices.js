@@ -6,7 +6,7 @@ class JwtServices{
     static sign(payload,expiry='1y',secret){
        return jwt.sign(payload,secret,{expiresIn:expiry})
     }
-    static verify(token,secret){
+   static  async verifyToken(token,secret){
         return jwt.verify(token,secret)
     }
     static async storeRefreshToken(next,token,userId){

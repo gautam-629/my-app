@@ -34,6 +34,7 @@ const registerController = {
     const { name, email, password, avatar } = req.body;
 
     // Image Base64
+    if(avatar){
     const buffer = Buffer.from(
       avatar.replace(/^data:image\/(png|jpg|jpeg);base64,/, ''),
       'base64'
@@ -49,7 +50,7 @@ const registerController = {
     } catch (err) {
       return next(err)
     }
-
+  }
     //hash password
     const hashPassword = await bcrypt.hash(password, 10);
 
@@ -60,13 +61,13 @@ const registerController = {
         name,
         email,
         password: hashPassword,
-        avatar:`/storage/${imagePath}`
+        avatar:(avatar)?`/storage/${imagePath}`:null
       })
       const result = await user.save();
 
       //generate token
       const accessToken = JwtServices.sign({ _id: result._id, role: result.role }, '1m', ACCESS_JWT_TOKEN);
-      const refreshToken = JwtServices.sign({ _id: result._id, role: result.role }, '1y', REFRESH_JWT_SECRET);
+      // const refreshToken = JwtServices.sign({ _id: result._id, role: result.role }, '1y', REFRESH_JWT_SECRET);
 
       // store into database
       JwtServices.storeRefreshToken(next, refreshToken, result._id);
@@ -75,12 +76,12 @@ const registerController = {
         maxAge: 1000 * 60 * 60,// 1h minutes in milliseconds
         httpOnly: true,
       });
-      res.cookie('refreshToken', refreshToken, {
-        maxAge: 1000 * 60 * 60,// 1h minutes in milliseconds
-        httpOnly: true,
-      });
+      // res.cookie('refreshToken', refreshToken, {
+      //   maxAge: 1000 * 60 * 60,// 1h minutes in milliseconds
+      //   httpOnly: true,
+      // });
       const userDto = new UserDto(user)
-      return res.status(201).json(userDto);
+      return res.status(201).json({user:userDto});
     } catch (error) {
       next(error);
     }
